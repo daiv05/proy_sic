@@ -14,10 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path, include
+from django.urls import path
+from contable import views
 from contable.views import *
-
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", front, name="front"),
+
+    path('cuentas/', views.CuentaList.as_view()),
+    path('cuentas/<int:pk>/', views.CuentaDetail.as_view()),
+
+    path('registro_diario/', views.DiarioList.as_view()),
+    path('registro_diario/<int:pk>/', views.DiarioDetail.as_view()),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

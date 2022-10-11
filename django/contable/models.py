@@ -32,7 +32,7 @@ class Librodiario(models.Model):
     fecha_registro = models.DateField()
     concepto = models.CharField(max_length=1024)
     cargo = models.BooleanField()
-    monto = models.DecimalField(max_digits=1000, decimal_places=1000)
+    monto = models.DecimalField(max_digits=30, decimal_places=10)
 
     class Meta:
         db_table = 'librodiario'
@@ -43,9 +43,9 @@ class Librodiario(models.Model):
 class Libromayor(models.Model):
     idmayor = models.AutoField(primary_key=True)
     idperiodo = models.ForeignKey('Periodo', models.DO_NOTHING, db_column='idperiodo')
-    sum_debe = models.DecimalField(max_digits=1000, decimal_places=1000)
-    sum_haber = models.DecimalField(max_digits=1000, decimal_places=1000)
-    saldo = models.DecimalField(max_digits=1000, decimal_places=1000)
+    sum_debe = models.DecimalField(max_digits=30, decimal_places=10)
+    sum_haber = models.DecimalField(max_digits=30, decimal_places=10)
+    saldo = models.DecimalField(max_digits=30, decimal_places=10)
     fecha = models.DateField()
 
     class Meta:
