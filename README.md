@@ -21,7 +21,13 @@ pip -r install .\requirements.txt
 ```sh
 py .\manage.py runserver       
 ```
+Antes de correr las migraciones crear una base de datos con el nombre <strong>devapp</strong> con el usuario <strong>admin</strong> y contraseña <strong>admin</strong> en PostgreSQL
 
+5. Correr migraciones
+```sh
+python manage.py makemigrations
+python manage.py migrate
+```
 
 ---
 ### Para levantar el frontend
