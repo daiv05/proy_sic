@@ -301,3 +301,6 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,python
+django/backend/__pycache__/
+django/contable/__pycache__/
+django/contable/migrations/__pycache__/
