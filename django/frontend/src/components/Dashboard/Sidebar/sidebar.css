@@ -1,0 +1,32 @@
+.sidebar {
+  min-height: 100vh;
+  width: 16rem;
+  font-family: "Inter Tight", sans-serif;
+}
+.sidebar__brand {
+  padding-left: 1.5rem;
+  height: 4rem;
+  background-color: #272c3f;
+  color: #ffff;
+}
+.sidebar__brand p {
+  line-height: 4rem;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  font-weight: bold;
+}
+.sidebar__content {
+  height: calc(100vh - 4rem);
+  background-color: #30384d;
+}
+.sidebar__content > li {
+  position: relative;
+  list-style: none;
+  margin-bottom: 1rem;
+}
+.sidebar__content > li > a {
+  text-decoration: none;
+  color: #ffff;
+  font-size: 1rem;
+  font-weight: 600;
+}
