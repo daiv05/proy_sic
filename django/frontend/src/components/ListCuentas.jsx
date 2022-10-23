@@ -1,4 +1,4 @@
-function List(props) {
+function ListCuentas(props) {
     function handleClick() {
         props.deletion(props.idcuenta)
     }
@@ -12,4 +12,4 @@ function List(props) {
     )
 }
 
-export default List;
+export default ListCuentas;

@@ -11,35 +11,6 @@ def front(request):
     context = { }
     return render(request, "index.html", context)
 
-
-# @api_view(['GET', 'POST'])
-# def cuenta(request):
-
-#     if request.method == 'GET':
-#         cuenta = Cuenta.objects.all()
-#         serializer = CuentaSerializer(cuenta, many=True)
-#         return Response(serializer.data)
-
-#     elif request.method == 'POST':
-#         serializer = CuentaSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# @api_view(['DELETE'])
-# def cuenta_detail(request, pk):
-#     try:
-#         cuenta = Cuenta.objects.get(pk=pk)
-#     except Cuenta.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-
-#     if request.method == 'DELETE':
-#         cuenta.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
 #-------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------
 

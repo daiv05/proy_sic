@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import List from "./List"
+import ListCuentas from "./ListCuentas"
 
 function Cuenta() {
       const [cuentas, setNewCuentas] = useState(null)
@@ -82,7 +82,7 @@ function Cuenta() {
                         <button onClick={createCuenta}>Create Cuenta</button>
                   </form>
 
-                  {cuentas && cuentas.map(cuenta => <List
+                  {cuentas && cuentas.map(cuenta => <ListCuentas
                         key={cuenta.idcuenta}
                         idcuenta={cuenta.idcuenta}
                         codigo_cuenta={cuenta.codigo_cuenta}

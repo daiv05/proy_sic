@@ -28,7 +28,7 @@ class Cuenta(models.Model):
 class Librodiario(models.Model):
     iddiario = models.AutoField(primary_key=True)
     idmayor = models.ForeignKey('Libromayor', models.DO_NOTHING, db_column='idmayor')
-    idcuenta = models.ForeignKey(Cuenta, models.DO_NOTHING, db_column='idcuenta')
+    idcuenta = models.ForeignKey('Cuenta', models.DO_NOTHING, db_column='idcuenta')
     fecha_registro = models.DateField()
     concepto = models.CharField(max_length=1024)
     cargo = models.BooleanField()

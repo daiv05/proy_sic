@@ -1,11 +1,11 @@
 import Cuenta from "./Cuentas"
+import LibroDiario from "./LibroDiario"
 
 function App() {
 
   return (
     <div className='App'>
-      <Cuenta />
-
+      <LibroDiario />
     </div>
   );
 }
