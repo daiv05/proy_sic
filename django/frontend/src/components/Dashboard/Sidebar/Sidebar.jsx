@@ -22,13 +22,13 @@ export default function Sidebar({ isOpen, toggleMenu }) {
       </div>
       <div className="sidebar__content p-4">
         <li>
-          <a href="#home">Transaction</a>
+          <a href="#home">Transacción</a>
         </li>
         <li>
-          <a href="#home"> General Journal</a>
+          <a href="#home">Libro diario</a>
         </li>
         <li>
-          <a href="#home">General Ledger</a>
+          <a href="#home">Cuentas</a>
         </li>
       </div>
     </div>

@@ -1,7 +1,6 @@
 .sidebar {
   min-height: calc(100vh - 60px);
   width: 16rem;
-  font-family: "Inter Tight", sans-serif;
   background-color: #30384d;
 }
 .sidebar__brand {
