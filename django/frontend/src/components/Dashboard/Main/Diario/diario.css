@@ -1,14 +1,17 @@
 .libro-diario {
-  width: 100%;
+  width: calc(100% - 16rem);
   background-color: rgb(243, 243, 243);
+}
+@media (max-width: 768px) {
+  .libro-diario {
+    width: 100%;
+  }
 }
 .libro-diario h1 {
   font-size: 1.5rem;
   font-weight: 600;
 }
-.libro-diario .options button:last-child {
-  margin-left: 1rem;
-}
+
 .libro-diario .table-container {
   margin-top: 1rem;
 }

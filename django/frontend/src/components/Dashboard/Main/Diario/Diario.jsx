@@ -7,7 +7,7 @@ export default function Diario() {
     <section className="libro-diario p-4">
       <h1>Libro diario</h1>
       <div className="options">
-        <Form className="d-flex gap-3 align-items-center">
+        <Form className="d-flex flex-column flex-sm-row gap-3  align-items-sm-center">
           <FormGroup>
             <Label for="dateDesde">Desde</Label>
             <Input
