@@ -1,0 +1,13 @@
+.home-container {
+  width: calc(100% - 16rem);
+  z-index: -2;
+}
+.home-container h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .home-container {
+    width: 100%;
+  }
+}

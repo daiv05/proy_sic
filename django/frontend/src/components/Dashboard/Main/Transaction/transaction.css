@@ -1,0 +1,25 @@
+.transaction-container {
+  width: calc(100% - 16rem);
+}
+
+@media (max-width: 768px) {
+  .transaction-container {
+    width: 100%;
+  }
+}
+.transaction-container h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.transaction-container .form-container {
+  outline: 1px solid black;
+}
+.transaction-container .form-container__inside {
+  background-color: rgb(240, 240, 240);
+  border-radius: 4px;
+}
+.transaction-container .icon-delete {
+  cursor: pointer;
+  color: rgb(252, 36, 36);
+  font-size: 1.3rem;
+}
