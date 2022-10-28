@@ -27,7 +27,6 @@ class Cuenta(models.Model):
 
 class Librodiario(models.Model):
     iddiario = models.AutoField(primary_key=True)
-    idmayor = models.ForeignKey('Libromayor', models.DO_NOTHING, db_column='idmayor')
     idcuenta = models.ForeignKey('Cuenta', models.DO_NOTHING, db_column='idcuenta')
     fecha_registro = models.DateField()
     concepto = models.CharField(max_length=1024)
@@ -42,12 +41,10 @@ class Librodiario(models.Model):
 
 class Libromayor(models.Model):
     idmayor = models.AutoField(primary_key=True)
-    idperiodo = models.ForeignKey('Periodo', models.DO_NOTHING, db_column='idperiodo')
     idcuenta = models.ForeignKey('Cuenta', models.DO_NOTHING, db_column='idcuenta')
     sum_debe = models.DecimalField(max_digits=30, decimal_places=10)
     sum_haber = models.DecimalField(max_digits=30, decimal_places=10)
     saldo = models.DecimalField(max_digits=30, decimal_places=10)
-    fecha = models.DateField()
 
     class Meta:
         db_table = 'libromayor'
