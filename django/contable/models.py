@@ -43,6 +43,7 @@ class Librodiario(models.Model):
 class Libromayor(models.Model):
     idmayor = models.AutoField(primary_key=True)
     idperiodo = models.ForeignKey('Periodo', models.DO_NOTHING, db_column='idperiodo')
+    idcuenta = models.ForeignKey('Cuenta', models.DO_NOTHING, db_column='idcuenta')
     sum_debe = models.DecimalField(max_digits=30, decimal_places=10)
     sum_haber = models.DecimalField(max_digits=30, decimal_places=10)
     saldo = models.DecimalField(max_digits=30, decimal_places=10)

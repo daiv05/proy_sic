@@ -1,0 +1,1 @@
+[{"model": "contable.periodo", "pk": 1, "fields": {"fechainicio": "2022-10-11", "fechafin": "2022-10-30", "activo": true}}]
