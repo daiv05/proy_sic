@@ -108,3 +108,104 @@ class DiarioDetail(APIView):
         diario = self.get_object(pk)
         diario.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
+
+
+#-------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------
+
+
+class PeriodoList(APIView):
+    """
+    List all Periodo, or create a new Periodo.
+    """
+    def get(self, request, format=None):
+        periodo = Periodo.objects.all()
+        serializer = PeriodoSerializer(periodo, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = PeriodoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PeriodoDetail(APIView):
+    """
+    Retrieve, update or delete a Periodo instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Periodo.objects.get(pk = pk)
+        except Periodo.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format = None):
+        periodo = self.get_object(pk)
+        serializer = PeriodoSerializer(periodo)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format = None):
+        periodo = self.get_object(pk)
+        serializer = PeriodoSerializer(periodo, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format = None):
+        periodo = self.get_object(pk)
+        periodo.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
+
+
+
+#-------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------------
+
+
+class MayorList(APIView):
+    """
+    List all LibroMayor, or create a new LibroMayor.
+    """
+    def get(self, request, format=None):
+        mayor = Libromayor.objects.all()
+        serializer = MayorSerializer(mayor, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = MayorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class MayorDetail(APIView):
+    """
+    Retrieve, update or delete a Periodo instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Libromayor.objects.get(pk = pk)
+        except Libromayor.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format = None):
+        mayor = self.get_object(pk)
+        serializer = MayorSerializer(mayor)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format = None):
+        mayor = self.get_object(pk)
+        serializer = MayorSerializer(mayor, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format = None):
+        mayor = self.get_object(pk)
+        mayor.delete()
+        return Response(status = status.HTTP_204_NO_CONTENT)
