@@ -21,6 +21,7 @@ function Cuenta() {
             }).then((response) => {
                   const data = response.data
                   setNewCuentas(data)
+                  console.log(response)
             }).catch((error) => {
                   if (error.response) {
                         console.log(error.response);
