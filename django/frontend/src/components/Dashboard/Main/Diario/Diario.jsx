@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./diario.css";
 import { Table, Form, FormGroup, Label, Input, Button } from "reactstrap";
+import SideBarContext from "../../../../context/sideBarContext";
 
 export default function Diario() {
+  const { isOpen } = useContext(SideBarContext);
+
   return (
-    <section className="libro-diario p-4">
+    <section
+      className={isOpen ? "libro-diario p-4 z-index-3" : "libro-diario p-4"}
+    >
       <h1>Libro diario</h1>
       <div className="options">
         <Form className="d-flex flex-column flex-sm-row gap-3  align-items-sm-center">

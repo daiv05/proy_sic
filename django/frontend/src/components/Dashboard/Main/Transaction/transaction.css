@@ -1,6 +1,7 @@
 .transaction-container {
   width: calc(100% - 16rem);
 }
+
 @media (max-width: 768px) {
   .transaction-container {
     width: 100%;

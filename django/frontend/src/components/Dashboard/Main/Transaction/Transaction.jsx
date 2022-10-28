@@ -1,14 +1,15 @@
-import React from "react";
-import "./transaction.css";
+import React, { useState, useContext } from "react";
+import withReactContent from "sweetalert2-react-content";
+import SideBarContext from "../../../../context/sideBarContext";
 import { Form, FormGroup, Input, Label, Button, Table } from "reactstrap";
 import { FiTrash2 } from "react-icons/fi";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-
-import { useState } from "react";
+import "./transaction.css";
 
 export default function Transaction() {
+  const { isOpen } = useContext(SideBarContext);
   const [formData, setFormData] = useState([]);
+
   const onSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -53,7 +54,13 @@ export default function Transaction() {
     }
   };
   return (
-    <section className="transaction-container p-4">
+    <section
+      className={
+        isOpen
+          ? "transaction-container p-4 z-index-3"
+          : "transaction-container p-4"
+      }
+    >
       <h1>Nueva transacción</h1>
       <div className="row">
         <div className="col-12 col-lg-4">

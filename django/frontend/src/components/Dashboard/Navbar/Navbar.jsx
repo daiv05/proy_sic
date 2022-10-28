@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Navbar,
   NavbarToggler,
@@ -8,10 +8,11 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import SideBarContext from "../../../context/sideBarContext";
 import imageTest from "../../../img/avatar.svg";
 import "./navbar.css";
 
-export default function NavbarContainer({ toggleMenu }) {
+export default function NavbarContainer() {
   const styles = {
     Toggler: {
       backgroundColor: "#dfcb16",
@@ -22,6 +23,8 @@ export default function NavbarContainer({ toggleMenu }) {
       marginLeft: "5px",
     },
   };
+  const { toggleMenu } = useContext(SideBarContext);
+
   return (
     <>
       <Navbar className="navbarContainer">
