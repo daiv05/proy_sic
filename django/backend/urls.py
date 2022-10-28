@@ -23,14 +23,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", front, name="front"),
 
-    # path("cuentas/", cuenta, name="cuenta"),
-    # path("cuentas/<int:pk>/", cuenta_detail, name="detail"),
-
     path('cuentas/', views.CuentaList.as_view()),
     path('cuentas/<int:pk>/', views.CuentaDetail.as_view()),
 
     path('diario/', views.DiarioList.as_view()),
     path('diario/<int:pk>/', views.DiarioDetail.as_view()),
+
+    path('mayor/', views.MayorList.as_view()),
+    path('mayor/<int:pk>/', views.MayorDetail.as_view()),
+
+    path('periodo/', views.PeriodoList.as_view()),
+    path('periodo/<int:pk>/', views.PeriodoDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

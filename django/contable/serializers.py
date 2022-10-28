@@ -10,3 +10,13 @@ class DiarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Librodiario
         fields = '__all__'
+
+class PeriodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Periodo
+        fields = '__all__'
+
+class MayorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Libromayor
+        fields = '__all__'
