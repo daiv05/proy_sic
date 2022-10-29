@@ -16,7 +16,7 @@ export default function Transaction() {
   const onSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    const [fecha, idcuenta, cargo, monto, descripcion] = [...data.entries()];
+    const [fecha, idcuenta, cargo, monto] = [...data.entries()];
     const test = [...data.entries()];
     console.log(test);
     const montoIvaValidation = data.has("iva")
@@ -30,7 +30,7 @@ export default function Transaction() {
         nombre_cuenta: idcuenta[1].split(",")[1],
         cargo: cargo[1] === "Debe" ? true : false,
         monto: montoIvaValidation,
-        concepto: descripcion[1] === "on" && data.get("descripcion"),
+        concepto: data.get("descripcion"),
       },
     ]);
     e.target.reset();
@@ -56,7 +56,7 @@ export default function Transaction() {
       .reduce((prev, curr) => prev + curr.monto, 0);
     console.log(formData);
     if (montoDebe === montoHaber) {
-      formData.forEach((_, key) => {
+      formData.forEach((element, key) => {
         axios.post("/diario/", formData[key]).then((response) => {
           console.log(response);
           if (key === formData.length - 1) {
