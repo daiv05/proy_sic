@@ -4,32 +4,44 @@ import SideBarContext from "../../../../context/sideBarContext";
 import { Form, FormGroup, Input, Label, Button, Table } from "reactstrap";
 import { FiTrash2 } from "react-icons/fi";
 import Swal from "sweetalert2";
+import axios from "axios";
 import "./transaction.css";
+import { useEffect } from "react";
 
 export default function Transaction() {
   const { isOpen } = useContext(SideBarContext);
   const [formData, setFormData] = useState([]);
+  const [cuenta, setCuenta] = useState([]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
-    const [fecha, tipoCuenta, debeHaber, monto, descripcion] = [
-      ...data.entries(),
-    ];
+    const [fecha, idcuenta, cargo, monto, descripcion] = [...data.entries()];
+    const test = [...data.entries()];
+    console.log(test);
     const montoIvaValidation = data.has("iva")
-      ? parseInt(monto[1]) * 0.13 + parseInt(monto[1]) || 0
-      : parseInt(monto[1]) || 0;
+      ? parseFloat(monto[1]) * 0.13 + parseFloat(monto[1]) || 0
+      : parseFloat(monto[1]) || 0;
     setFormData([
       ...formData,
       {
-        id: Math.floor(Math.random() * 10000),
-        fecha: fecha[1],
-        tipoCuenta: tipoCuenta[1],
-        debeHaber: debeHaber[1],
+        fecha_registro: fecha[1],
+        idcuenta: idcuenta[1].split(",")[0],
+        nombre_cuenta: idcuenta[1].split(",")[1],
+        cargo: cargo[1] === "Debe" ? true : false,
         monto: montoIvaValidation,
-        descripcion: descripcion[1] || "Descripción no adjuntada",
+        concepto: descripcion[1] === "on" && data.get("descripcion"),
       },
     ]);
+    e.target.reset();
+  };
+  const getCuentas = async () => {
+    try {
+      const { data } = await axios.get("/cuentas/");
+      setCuenta(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   const handleDelete = (id) => {
     setFormData(formData.filter((data) => data.id !== id));
@@ -42,9 +54,20 @@ export default function Transaction() {
     const montoHaber = formData
       .filter((data) => data.debeHaber === "Haber")
       .reduce((prev, curr) => prev + curr.monto, 0);
-
+    console.log(formData);
     if (montoDebe === montoHaber) {
-      MySwal.fire("Good job!", "You clicked the button!", "success");
+      formData.forEach((_, key) => {
+        axios.post("/diario/", formData[key]).then((response) => {
+          console.log(response);
+          if (key === formData.length - 1) {
+            MySwal.fire({
+              icon: "success",
+              title: "Transacciones registradas correctamente",
+            });
+            setFormData([]);
+          }
+        });
+      });
     } else {
       MySwal.fire({
         icon: "error",
@@ -53,6 +76,10 @@ export default function Transaction() {
       });
     }
   };
+
+  useEffect(() => {
+    getCuentas();
+  }, []);
   return (
     <section
       className={
@@ -71,20 +98,33 @@ export default function Transaction() {
                 type="date"
                 id="dateTransaction"
                 name="fechaTransaccion"
+                required
               ></Input>
             </FormGroup>
             <FormGroup>
               <Label>Seleccionar cuenta</Label>
               <div className="row">
                 <div className="col-6">
-                  <Input id="listCuentas" name="cuenta" type="select">
-                    <option>IVA debito fiscal</option>
-                    <option>Caja</option>
-                    <option>Compra</option>
+                  <Input id="listCuentas" name="cuenta" type="select" required>
+                    {cuenta.map((value, key) => {
+                      return (
+                        <option
+                          value={[value.idcuenta, value.nombre_cuenta]}
+                          key={key}
+                        >
+                          {value.nombre_cuenta}
+                        </option>
+                      );
+                    })}
                   </Input>
                 </div>
                 <div className="col-6">
-                  <Input id="debeHaberOptions" name="debeHaber" type="select">
+                  <Input
+                    id="debeHaberOptions"
+                    name="debeHaber"
+                    type="select"
+                    required
+                  >
                     <option>Debe</option>
                     <option>Haber</option>
                   </Input>
@@ -93,7 +133,7 @@ export default function Transaction() {
             </FormGroup>
             <FormGroup>
               <Label for="monto">Monto</Label>
-              <Input type="number" id="monto" name="monto"></Input>
+              <Input type="number" id="monto" name="monto" required></Input>
             </FormGroup>
             <FormGroup>
               <Label for="monto">IVA (13%)</Label>{" "}
@@ -101,7 +141,12 @@ export default function Transaction() {
             </FormGroup>
             <FormGroup>
               <Label for="description">Descripcion</Label>
-              <Input type="textarea" id="description" name="descripcion" />
+              <Input
+                type="textarea"
+                id="description"
+                name="descripcion"
+                required
+              />
             </FormGroup>
             <Button type="submit" color="dark">
               Agregar
@@ -121,21 +166,17 @@ export default function Transaction() {
             </thead>
             <tbody>
               {formData.length ? (
-                formData.map((datForm) => {
+                formData.map((datForm, key) => {
                   return (
-                    <tr key={datForm.id}>
-                      <td>{datForm.id}</td>
-                      <td>{datForm.tipoCuenta}</td>
-                      <td>
-                        {datForm.debeHaber === "Debe" ? datForm.monto : 0}
-                      </td>
-                      <td>
-                        {datForm.debeHaber === "Haber" ? datForm.monto : 0}
-                      </td>
+                    <tr key={key}>
+                      <td>{key + 1}</td>
+                      <td>{datForm.nombre_cuenta}</td>
+                      <td>{datForm.cargo ? datForm.monto : 0}</td>
+                      <td>{!datForm.cargo ? datForm.monto : 0}</td>
                       <td>
                         <FiTrash2
                           className="icon-delete"
-                          onClick={() => handleDelete(datForm.id)}
+                          onClick={() => handleDelete(key + 1)}
                         />
                       </td>
                     </tr>

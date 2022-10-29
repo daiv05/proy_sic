@@ -26,6 +26,7 @@ export default function Diario() {
   const [cuenta, setCuenta] = useState([]);
   const [open, setOpen] = useState("");
   const [modal, setModal] = useState(false);
+
   const toggle = (id) => {
     if (open === id) {
       setOpen();
