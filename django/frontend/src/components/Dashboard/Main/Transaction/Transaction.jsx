@@ -49,14 +49,14 @@ export default function Transaction() {
   const handleDualidad = () => {
     const MySwal = withReactContent(Swal);
     const montoDebe = formData
-      .filter((data) => data.debeHaber === "Debe")
+      .filter((data) => data.cargo === true)
       .reduce((prev, curr) => prev + curr.monto, 0);
     const montoHaber = formData
-      .filter((data) => data.debeHaber === "Haber")
+      .filter((data) => data.cargo === false)
       .reduce((prev, curr) => prev + curr.monto, 0);
-    console.log(formData);
+    console.log(montoDebe, montoHaber);
     if (montoDebe === montoHaber) {
-      formData.forEach((element, key) => {
+      formData.forEach((_, key) => {
         axios.post("/diario/", formData[key]).then((response) => {
           console.log(response);
           if (key === formData.length - 1) {
@@ -133,7 +133,7 @@ export default function Transaction() {
             </FormGroup>
             <FormGroup>
               <Label for="monto">Monto</Label>
-              <Input type="number" id="monto" name="monto" required></Input>
+              <Input type="text" id="monto" name="monto" required></Input>
             </FormGroup>
             <FormGroup>
               <Label for="monto">IVA (13%)</Label>{" "}

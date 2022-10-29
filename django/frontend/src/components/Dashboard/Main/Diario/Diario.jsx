@@ -2,10 +2,26 @@ import React, { useContext } from "react";
 import "./diario.css";
 import { Table, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import SideBarContext from "../../../../context/sideBarContext";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 export default function Diario() {
   const { isOpen } = useContext(SideBarContext);
+  const [datas, setData] = useState([]);
 
+  const getDiaro = async () => {
+    try {
+      const { data } = await axios.get("/diario/");
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    getDiaro();
+  }, []);
   return (
     <section
       className={isOpen ? "libro-diario p-4 z-index-3" : "libro-diario p-4"}
@@ -45,33 +61,23 @@ export default function Diario() {
                 <th>Date</th>
                 <th>Monto</th>
                 <th>Descripción</th>
-                <th>Código Cuenta</th>
-                <th>Cuenta</th>
-                <th>Debe</th>
-                <th>Haber</th>
+            
+               
+               
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>2022-10-20</td>
-                <td>$500</td>
-                <td>Compra de mercadería</td>
-                <td>1001</td>
-                <td>Compra</td>
-                <td>15000</td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>2022-10-20</td>
-                <td>$500</td>
-                <td>Salida de caja</td>
-                <td>1001</td>
-                <td>Caja</td>
-                <td>0</td>
-                <td>15000</td>
-              </tr>
+              {datas.map((e, key) => {
+                return (
+                  <tr key={key}>
+                    <td>{e.idcuenta}</td>
+                    <td>{e.fecha_registro}</td>
+                    <td>{e.monto}</td>
+                    <td>{e.concepto}</td>
+                   
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
         </div>

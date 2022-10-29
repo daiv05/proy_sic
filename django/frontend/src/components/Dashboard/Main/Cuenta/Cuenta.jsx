@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import {
+  Table,
   Form,
   FormGroup,
   Input,
@@ -24,6 +25,7 @@ import "./cuenta.css";
 export default function Diario() {
   const { isOpen } = useContext(SideBarContext);
   const [cuenta, setCuenta] = useState([]);
+  const [mayor, setMayor] = useState([]);
   const [open, setOpen] = useState("");
   const [modal, setModal] = useState(false);
 
@@ -35,7 +37,6 @@ export default function Diario() {
     }
   };
   const toggleModal = () => setModal(!modal);
-
   const getCuentas = async () => {
     try {
       const { data } = await axios.get("/cuentas/");
@@ -44,6 +45,16 @@ export default function Diario() {
       console.log(error.message);
     }
   };
+  const getMayor = async () => {
+    try {
+      const { data } = await axios.get("/mayor/");
+      setMayor(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
     const MySwal = withReactContent(Swal);
@@ -78,6 +89,7 @@ export default function Diario() {
   };
   useEffect(() => {
     getCuentas();
+    getMayor();
   }, []);
   return (
     <section
@@ -111,11 +123,37 @@ export default function Diario() {
                   {data.codigo_cuenta} - {data.nombre_cuenta}
                 </AccordionHeader>
                 <AccordionBody accordionId={(key + 1).toString()}>
-                  <strong>This is the first item&#39;s accordion body.</strong>
-                  You can modify any of this with custom CSS or overriding our
-                  default variables. It&#39;s also worth noting that just about
-                  any HTML can go within the <code>.accordion-body</code>,
-                  though the transition does limit overflow.
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Debe</th>
+                        <th>Haber</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {mayor.map((e, index) => {
+                        return (
+                          <tr key={index}>
+                            <th scope="row">{index + 1}</th>
+                            <td>
+                              {e.idcuenta === data.idcuenta &&
+                                `$${parseFloat(e.sum_debe)}`}
+                            </td>
+                            <td>
+                              {e.idcuenta === data.idcuenta &&
+                                ` $${parseFloat(e.sum_haber)}`}
+                            </td>
+                            <td>
+                              {e.idcuenta === data.idcuenta &&
+                                `$${parseFloat(e.saldo)}`}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
                 </AccordionBody>
               </AccordionItem>
             </Accordion>
