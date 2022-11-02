@@ -14,15 +14,9 @@ class DiarioSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def to_representation(self, instance):
-        return {
-            'idiario': instance.iddiario,
-            'fecha_registro': instance.fecha_registro,
-            'concepto': instance.concepto,
-            'cargo': instance.cargo,
-            'monto': instance.monto,
-            'idcuenta': instance.idcuenta.nombre_cuenta,
-
-        }
+        response = super().to_representation(instance);
+        response['idcuenta'] = CuentaSerializer(instance.idcuenta).data
+        return response
 
 
 class PeriodoSerializer(serializers.ModelSerializer):
