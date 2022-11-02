@@ -7,9 +7,15 @@ class CuentaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class DiarioSerializer(serializers.ModelSerializer):
+
+    cuenta = CuentaSerializer(read_only=True)
+    idcuenta = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Cuenta.objects.all(), source='cuenta')
+
     class Meta:
         model = Librodiario
-        fields = '__all__'
+        fields = ('iddiario', 'cuenta', 'idcuenta', 'fecha_registro', 'concepto', 'cargo', 'monto')
+    
+
 
 class PeriodoSerializer(serializers.ModelSerializer):
     class Meta:
