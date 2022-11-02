@@ -22,6 +22,7 @@ export default function Transaction() {
     const montoIvaValidation = data.has("iva")
       ? parseFloat(monto[1]) * 0.13 + parseFloat(monto[1]) || 0
       : parseFloat(monto[1]) || 0;
+
     setFormData([
       ...formData,
       {
@@ -51,10 +52,12 @@ export default function Transaction() {
     const montoDebe = formData
       .filter((data) => data.cargo === true)
       .reduce((prev, curr) => prev + curr.monto, 0);
+
     const montoHaber = formData
       .filter((data) => data.cargo === false)
       .reduce((prev, curr) => prev + curr.monto, 0);
     console.log(montoDebe, montoHaber);
+    
     if (montoDebe === montoHaber) {
       formData.forEach((_, key) => {
         axios.post("/diario/", formData[key]).then((response) => {
