@@ -168,16 +168,17 @@ def cerrarPeriodo():
     periodoActivo = Periodo.objects.get(activo=True)
     periodoActivo.activo = False
     periodoActivo.save()
-    Librodiario.objects.all().delete()
     mayores = Libromayor.objects.all()
     for may in mayores:
         if (may.sum_debe >= may.sum_haber):
             may.sum_debe = may.saldo
             may.sum_haber = Decimal(0)
-        if (may.sum_haber < may.sum_debe):
+        if (may.sum_haber > may.sum_debe):
             may.sum_haber = may.saldo
             may.sum_debe = Decimal(0)
         may.save()
+    
+    Librodiario.objects.all().delete()
     return 0
 
 
