@@ -45,7 +45,8 @@ export default function Transaction() {
     }
   };
   const handleDelete = (id) => {
-    setFormData(formData.filter((data) => data.id !== id));
+    console.log(id);
+    setFormData(formData.filter((data) => data.idcuenta !== id));
   };
   const handleDualidad = () => {
     const MySwal = withReactContent(Swal);
@@ -57,20 +58,18 @@ export default function Transaction() {
       .filter((data) => data.cargo === false)
       .reduce((prev, curr) => prev + curr.monto, 0);
     console.log(montoDebe, montoHaber);
-    
+
     if (montoDebe === montoHaber) {
       formData.forEach((_, key) => {
         axios.post("/diario/", formData[key]).then((response) => {
           console.log(response);
-          if (key === formData.length - 1) {
-            MySwal.fire({
-              icon: "success",
-              title: "Transacciones registradas correctamente",
-            });
-            setFormData([]);
-          }
         });
       });
+      MySwal.fire({
+        icon: "success",
+        title: "Transacciones registradas correctamente",
+      });
+      setFormData([]);
     } else {
       MySwal.fire({
         icon: "error",
@@ -179,7 +178,7 @@ export default function Transaction() {
                       <td>
                         <FiTrash2
                           className="icon-delete"
-                          onClick={() => handleDelete(key + 1)}
+                          onClick={() => handleDelete(datForm.idcuenta)}
                         />
                       </td>
                     </tr>

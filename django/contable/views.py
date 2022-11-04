@@ -83,24 +83,30 @@ class DiarioList(APIView):
         serializer = DiarioSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            cuentaAfectada = Cuenta.objects.get(idcuenta=request.data['idcuenta'])
-            mayorAfectado = Libromayor.objects.get(idcuenta=cuentaAfectada.idcuenta)
-            #print(type(request.data['cargo']))
-            
+            cuentaAfectada = Cuenta.objects.get(
+                idcuenta=request.data['idcuenta'])
+            mayorAfectado = Libromayor.objects.get(
+                idcuenta=cuentaAfectada.idcuenta)
+            # print(type(request.data['cargo']))
+
             if (request.data['cargo'] == True):
-                mayorAfectado.sum_debe = mayorAfectado.sum_debe + Decimal(request.data['monto'])
+                mayorAfectado.sum_debe = mayorAfectado.sum_debe + \
+                    Decimal(request.data['monto'])
                 #print(cuentaAfectada.nombre_cuenta, mayorAfectado.sum_debe)
             elif (request.data['cargo'] == False):
-                mayorAfectado.sum_haber = mayorAfectado.sum_haber + Decimal(request.data['monto'])
-            
+                mayorAfectado.sum_haber = mayorAfectado.sum_haber + \
+                    Decimal(request.data['monto'])
+
             if(mayorAfectado.sum_debe > mayorAfectado.sum_haber):
-                mayorAfectado.saldo = mayorAfectado.saldo + (mayorAfectado.sum_debe - mayorAfectado.sum_haber)
+                mayorAfectado.saldo = mayorAfectado.saldo + \
+                    (mayorAfectado.sum_debe - mayorAfectado.sum_haber)
             elif (mayorAfectado.sum_debe < mayorAfectado.sum_haber):
-                mayorAfectado.saldo = mayorAfectado.saldo + (mayorAfectado.sum_haber - mayorAfectado.sum_debe)
-            
+                mayorAfectado.saldo = mayorAfectado.saldo + \
+                    (mayorAfectado.sum_haber - mayorAfectado.sum_debe)
+
             mayorAfectado.save()
             #print(cuentaAfectada.nombre_cuenta, mayorAfectado.sum_debe)
-            
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -152,7 +158,7 @@ class PeriodoList(APIView):
     def post(self, request, format=None):
         serializer = PeriodoSerializer(data=request.data)
         if serializer.is_valid():
-            periodoActivo = Periodo.objects.get(activo = True)
+            periodoActivo = Periodo.objects.get(activo=True)
             periodoActivo.activo = False
             periodoActivo.save()
             serializer.save()

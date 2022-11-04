@@ -8,12 +8,12 @@ import axios from "axios";
 
 export default function Diario() {
   const { isOpen } = useContext(SideBarContext);
-  const [datas, setData] = useState([]);
+  const [diario, setDiario] = useState([]);
 
   const getDiaro = async () => {
     try {
       const { data } = await axios.get("/diario/");
-      setData(data);
+      setDiario(data);
       console.log(data);
     } catch (error) {
       console.log(error.message);
@@ -59,25 +59,33 @@ export default function Diario() {
               <tr>
                 <th>#</th>
                 <th>Date</th>
-                <th>Monto</th>
+                <th>Cuenta</th>
+                <th>Debe</th>
+                <th>Haber</th>
                 <th>Descripción</th>
-            
-               
-               
               </tr>
             </thead>
             <tbody>
-              {datas.map((e, key) => {
-                return (
-                  <tr key={key}>
-                    <td>{e.idcuenta}</td>
-                    <td>{e.fecha_registro}</td>
-                    <td>{e.monto}</td>
-                    <td>{e.concepto}</td>
-                   
-                  </tr>
-                );
-              })}
+              {diario.length ? (
+                diario.map((e, key) => {
+                  return (
+                    <tr key={key}>
+                      <td>{e.iddiario}</td>
+                      <td>{e.fecha_registro}</td>
+                      <td>{e.idcuenta.nombre_cuenta}</td>
+                      <td>{e.cargo ? parseInt(e.monto).toFixed(2) : 0}</td>
+                      <td>{!e.cargo ? parseInt(e.monto).toFixed(2) : 0}</td>
+                      <td>{e.concepto}</td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={6} style={{ textAlign: "center" }}>
+                    No hay datos que mostrar ...
+                  </td>
+                </tr>
+              )}
             </tbody>
           </Table>
         </div>
