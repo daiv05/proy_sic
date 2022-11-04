@@ -97,7 +97,7 @@ class DiarioList(APIView):
                 mayorAfectado.sum_haber = mayorAfectado.sum_haber + \
                     Decimal(request.data['monto'])
 
-            if(mayorAfectado.sum_debe > mayorAfectado.sum_haber):
+            if(mayorAfectado.sum_debe >= mayorAfectado.sum_haber):
                 mayorAfectado.saldo = mayorAfectado.saldo + \
                     (mayorAfectado.sum_debe - mayorAfectado.sum_haber)
             elif (mayorAfectado.sum_debe < mayorAfectado.sum_haber):
@@ -158,12 +158,27 @@ class PeriodoList(APIView):
     def post(self, request, format=None):
         serializer = PeriodoSerializer(data=request.data)
         if serializer.is_valid():
-            periodoActivo = Periodo.objects.get(activo=True)
-            periodoActivo.activo = False
-            periodoActivo.save()
+            cerrarPeriodo()
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def cerrarPeriodo():
+    periodoActivo = Periodo.objects.get(activo=True)
+    periodoActivo.activo = False
+    periodoActivo.save()
+    Librodiario.objects.all().delete()
+    mayores = Libromayor.objects.all()
+    for may in mayores:
+        if (may.sum_debe >= may.sum_haber):
+            may.sum_debe = may.saldo
+            may.sum_haber = Decimal(0)
+        if (may.sum_haber < may.sum_debe):
+            may.sum_haber = may.saldo
+            may.sum_debe = Decimal(0)
+        may.save()
+    return 0
 
 
 class PeriodoDetail(APIView):
