@@ -174,7 +174,7 @@ def cerrarPeriodo():
         if (may.sum_debe >= may.sum_haber):
             may.sum_debe = may.saldo
             may.sum_haber = Decimal(0)
-        if (may.sum_haber < may.sum_debe):
+        if (may.sum_haber > may.sum_debe):
             may.sum_haber = may.saldo
             may.sum_debe = Decimal(0)
         may.save()
