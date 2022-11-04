@@ -1,6 +1,5 @@
 .home-container {
   width: calc(100% - 16rem);
-  z-index: -2;
 }
 .home-container h1 {
   font-size: 1.5rem;
