@@ -63,18 +63,6 @@ export default function Sidebar() {
               Libro diario
             </NavLink>
           </li>
-
-          <li>
-            <NavLink
-              to="/mayor/list"
-              style={({ isActive }) => ({
-                borderLeft: isActive && "4px solid #3c7fcceb",
-                transition: "border-width 0.2s linear",
-              })}
-            >
-              Libro Mayor
-            </NavLink>
-          </li>
         </ul>
       </div>
     </div>

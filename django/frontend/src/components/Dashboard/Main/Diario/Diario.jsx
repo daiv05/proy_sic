@@ -59,10 +59,11 @@ export default function Diario() {
               <tr>
                 <th>#</th>
                 <th>Date</th>
+                <th>Descripción</th>
+                <th>Código Cuenta</th>
                 <th>Cuenta</th>
                 <th>Debe</th>
                 <th>Haber</th>
-                <th>Descripción</th>
               </tr>
             </thead>
             <tbody>
@@ -72,10 +73,11 @@ export default function Diario() {
                     <tr key={key}>
                       <td>{e.iddiario}</td>
                       <td>{e.fecha_registro}</td>
+                      <td>{e.concepto}</td>
+                      <td>{e.idcuenta.codigo_cuenta}</td>
                       <td>{e.idcuenta.nombre_cuenta}</td>
                       <td>{e.cargo ? parseInt(e.monto).toFixed(2) : 0}</td>
                       <td>{!e.cargo ? parseInt(e.monto).toFixed(2) : 0}</td>
-                      <td>{e.concepto}</td>
                     </tr>
                   );
                 })
