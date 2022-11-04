@@ -43,17 +43,6 @@ export default function Sidebar() {
           </li>
           <li>
             <NavLink
-              to="/cuentas/list"
-              style={({ isActive }) => ({
-                borderLeft: isActive && "4px solid #3c7fcceb",
-                transition: "border-width 0.2s linear",
-              })}
-            >
-              Cuentas
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
               to="/libroDiario/list"
               style={({ isActive }) => ({
                 borderLeft: isActive && "4px solid #3c7fcceb",
@@ -61,6 +50,17 @@ export default function Sidebar() {
               })}
             >
               Libro diario
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/cuentas/list"
+              style={({ isActive }) => ({
+                borderLeft: isActive && "4px solid #3c7fcceb",
+                transition: "border-width 0.2s linear",
+              })}
+            >
+              Cuentas
             </NavLink>
           </li>
 
