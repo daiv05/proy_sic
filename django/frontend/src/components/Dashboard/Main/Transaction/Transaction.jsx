@@ -61,14 +61,26 @@ export default function Transaction() {
 
     if (montoDebe === montoHaber) {
       formData.forEach((_, key) => {
-        axios.post("/diario/", formData[key]).then((response) => {
-          console.log(response);
-        });
+        axios
+          .post("/diario/", formData[key])
+          .then((response) => {
+            console.log(`Response: ${response.data} of ${key} request`);
+          })
+          .then(() => {
+            MySwal.fire({
+              icon: "success",
+              title: "Transacciones registradas correctamente",
+            });
+          })
+          .catch((error) => {
+            MySwal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: `Something went wrong. Status: ${error.status}`,
+            });
+          });
       });
-      MySwal.fire({
-        icon: "success",
-        title: "Transacciones registradas correctamente",
-      });
+
       setFormData([]);
     } else {
       MySwal.fire({
