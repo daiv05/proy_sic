@@ -1,0 +1,13 @@
+.balances-container {
+  width: calc(100% - 16rem);
+}
+
+.balances-container h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .balances-container {
+    width: 100%;
+  }
+}

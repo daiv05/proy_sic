@@ -75,6 +75,17 @@ export default function Sidebar() {
               Libro Mayor
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/balance"
+              style={({ isActive }) => ({
+                borderLeft: isActive && "4px solid #3c7fcceb",
+                transition: "border-width 0.2s linear",
+              })}
+            >
+              Balance Comprobación
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>
